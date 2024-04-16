@@ -49,7 +49,7 @@ jobs:
             suffix=
        # Taken from LocalAI
       - name: Release space from worker
-        if: inputs.runs-on == 'ubuntu-latest'
+        if: startsWith(github.ref, format('refs/tags/{0}/v', matrix.contexts))
         run: |
           echo "Listing top largest packages"
           pkgs=$(dpkg-query -Wf '${Installed-Size}\t${Package}\t${Status}\n' | awk '$NF == "installed"{print $1 "\t" $2}' | sort -nr)
